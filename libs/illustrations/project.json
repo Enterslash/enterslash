@@ -1,0 +1,8 @@
+{
+  "name": "illustrations",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/illustrations/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": []
+}

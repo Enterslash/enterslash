@@ -1,0 +1,13 @@
+diff --git a/node_modules/@react-native-community/cli-platform-android/native_modules.gradle b/node_modules/@react-native-community/cli-platform-android/native_modules.gradle
+index 8a218d5..6930253 100644
+--- a/node_modules/@react-native-community/cli-platform-android/native_modules.gradle
++++ b/node_modules/@react-native-community/cli-platform-android/native_modules.gradle
+@@ -445,7 +445,7 @@ class ReactNativeModules {
+         def nameCleansed = name.replaceAll('[~*!\'()]+', '_').replaceAll('^@([\\w-.]+)/', '$1_')
+         reactNativeModuleConfig.put("name", name)
+         reactNativeModuleConfig.put("nameCleansed", nameCleansed)
+-        reactNativeModuleConfig.put("androidSourceDir", androidConfig["sourceDir"])
++        reactNativeModuleConfig.put("androidSourceDir", androidConfig["sourceDir"].replace('apps/enterus/mobile', ""))
+         reactNativeModuleConfig.put("packageInstance", androidConfig["packageInstance"])
+         reactNativeModuleConfig.put("packageImportPath", androidConfig["packageImportPath"])
+         reactNativeModuleConfig.put("libraryName", androidConfig["libraryName"])

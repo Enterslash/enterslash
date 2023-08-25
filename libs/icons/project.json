@@ -1,0 +1,19 @@
+{
+  "name": "icons",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/icons/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/icons",
+        "main": "libs/icons/src/index.ts",
+        "tsConfig": "libs/icons/tsconfig.lib.json",
+        "assets": ["libs/icons/*.md"]
+      }
+    }
+  },
+  "tags": ["icons"]
+}

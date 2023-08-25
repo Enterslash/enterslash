@@ -1,0 +1,8 @@
+{
+  "name": "enterus-http-client",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/enterus/http-client/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["http client"]
+}

@@ -1,0 +1,50 @@
+{
+  "name": "enterus-api",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/enterus/api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/enterus/api",
+        "main": "apps/enterus/api/src/main.ts",
+        "tsConfig": "apps/enterus/api/tsconfig.app.json",
+        "isolatedConfig": true,
+        "webpackConfig": "apps/enterus/api/webpack.config.js",
+        "generatePackageJson": true
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "enterus-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "enterus-api:build:development"
+        },
+        "production": {
+          "buildTarget": "enterus-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/enterus/api/**/*.ts"]
+      }
+    }
+  },
+  "tags": ["api"]
+}

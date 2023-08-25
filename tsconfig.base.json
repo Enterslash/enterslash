@@ -1,0 +1,37 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "lib": ["es2020", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@enterslash/enterus/components": ["libs/enterus/components/src/index.ts"],
+      "@enterslash/enterus/http-client": ["libs/enterus/http-client/src/index.ts"],
+      "@enterslash/enterus/socket-client": [
+        "libs/enterus/socket-client/src/index.ts"
+      ],
+      "@enterslash/enterus/types": ["libs/enterus/types/src/index.ts"],
+      "@enterslash/enterus/utils": ["libs/enterus/utils/src/index.ts"],
+      "@enterslash/icons": ["libs/icons/src/index.ts"],
+      "@enterslash/illustrations": ["libs/illustrations/src/index.ts"],
+      "@enterslash/react-icons": ["libs/react-icons/src/index.ts"],
+      "@enterslash/react-native-icons": ["libs/react-native-icons/src/index.ts"],
+      "@enterslash/react-native-ui": ["libs/react-native-ui/src/index.ts"],
+      "@enterslash/react-native-utils": ["libs/react-native-utils/src/index.ts"],
+      "@enterslash/react-ui": ["libs/react-ui/src/index.ts"],
+      "@enterslash/types": ["libs/types/src/index.ts"],
+      "@enterslash/utils": ["libs/utils/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

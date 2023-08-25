@@ -1,0 +1,91 @@
+{
+  "name": "enterus-mobile",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/enterus/mobile/src",
+  "projectType": "application",
+  "targets": {
+    "sync-deps": {
+      "executor": "@nx/react-native:sync-deps",
+      "options": {}
+    },
+    "ensure-symlink": {
+      "executor": "@nx/react-native:ensure-symlink",
+      "options": {}
+    }
+  },
+  "targets.archive": {
+    "start": {
+      "executor": "@nx/react-native:start",
+      "options": {
+        "port": 8081
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "nx start mobile"
+      }
+    },
+    "run-ios": {
+      "executor": "@nx/react-native:run-ios",
+      "options": {
+        "simulator": "iPhone 13"
+      }
+    },
+    "bundle-ios": {
+      "executor": "@nx/react-native:bundle",
+      "outputs": ["{options.bundleOutput}"],
+      "options": {
+        "entryFile": "index.tsx",
+        "platform": "ios",
+        "bundleOutput": "dist/apps/enterus/mobile/ios/main.jsbundle"
+      }
+    },
+    "run-android": {
+      "executor": "@nx/react-native:run-android",
+      "options": {}
+    },
+    "build-android": {
+      "executor": "@nx/react-native:build-android",
+      "outputs": [
+        "{projectRoot}/android/app/build/outputs/bundle",
+        "{projectRoot}/android/app/build/outputs/apk"
+      ],
+      "options": {}
+    },
+    "build-ios": {
+      "executor": "@nx/react-native:build-ios",
+      "outputs": ["{projectRoot}/ios/build/Build"],
+      "options": {}
+    },
+    "pod-install": {
+      "executor": "@nx/react-native:pod-install",
+      "options": {}
+    },
+    "bundle-android": {
+      "executor": "@nx/react-native:bundle",
+      "outputs": ["{options.bundleOutput}"],
+      "options": {
+        "entryFile": "index.tsx",
+        "platform": "android",
+        "bundleOutput": "dist/apps/enterus/mobile/android/main.jsbundle"
+      }
+    },
+    "sync-deps": {
+      "executor": "@nx/react-native:sync-deps",
+      "options": {}
+    },
+    "ensure-symlink": {
+      "executor": "@nx/react-native:ensure-symlink",
+      "options": {}
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/enterus/mobile/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": ["mobile"]
+}

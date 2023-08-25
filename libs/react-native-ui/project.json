@@ -1,0 +1,16 @@
+{
+  "name": "react-native-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/react-native-ui/src",
+  "projectType": "library",
+  "tags": ["react native ui"],
+  "targets": {
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["libs/react-native-ui/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  }
+}

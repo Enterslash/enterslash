@@ -1,0 +1,8 @@
+{
+  "name": "enterus-socket-client",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/enterus/socket-client/src",
+  "projectType": "library",
+  "targets": {},
+  "tags": ["socket client"]
+}
