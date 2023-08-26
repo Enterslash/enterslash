@@ -13,7 +13,7 @@ export const semester = [
     "12th"
 ]
 
-const sectionNumber = Array.from({ length: 20 }).map((_, i) => i)
+const sectionNumber = Array.from({ length: 30 }).map((_, i) => i)
 
 export const section = [
     ...sectionNumber.map((i) => ({
@@ -21,8 +21,8 @@ export const section = [
         value: `d${i + 1}`,
     })),
     ...sectionNumber.map((i) => ({
-        label: `M${i + 1}`,
-        value: `m${i + 1}`,
+        label: `E${i + 1}`,
+        value: `e${i + 1}`,
     })),
 ]
 
