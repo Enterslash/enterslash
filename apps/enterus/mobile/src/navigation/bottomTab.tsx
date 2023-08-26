@@ -69,6 +69,8 @@ function MainStack() {
     }, [])
   );
 
+  return <Chat />;
+
   return (
     <Tab.Navigator
       initialRouteName="home"

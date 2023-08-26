@@ -1,4 +1,4 @@
-import { IBookingModel } from "./Booking";
+import { IRoom } from "./Room";
 import { IUserModel } from "./User";
 
 export enum MessageType {
@@ -10,7 +10,7 @@ export enum MessageType {
 export interface IMessage {
     receiver: IUserModel,
     sender: IUserModel,
-    booking: IBookingModel,
+    room: IRoom,
     message: string,
     attachments: string[],
     type: MessageType,

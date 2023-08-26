@@ -3,9 +3,9 @@ import { Schema, model } from "mongoose";
 
 const messageSchema = new Schema<IMessage>(
     {
-        booking: {
+        room: {
             type: Schema.Types.ObjectId,
-            ref: "Booking",
+            ref: "Room",
             required: true,
         },
         sender: {

@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, View } from 'react-native';
 import { TEXT, Text } from './Text';
 import { ActionModal } from './Modal';
 import { css, theme } from '@enterslash/enterus/utils';
+import { ScreenHeight } from '@enterslash/react-native-utils';
 
 interface Props {
   options: {
@@ -13,6 +14,7 @@ interface Props {
   value: string;
   defaultValue?: string;
   label: string;
+  scroll?: boolean;
 }
 
 export const Select = ({
@@ -21,6 +23,7 @@ export const Select = ({
   value,
   defaultValue,
   label,
+  scroll,
 }: Props) => {
   const [open, setOpen] = React.useState(false);
   const labelFromValue = options.find((item) => item.value === value);
@@ -29,10 +32,13 @@ export const Select = ({
     onSelect(v);
     setOpen(false);
   };
+
+  const Wrapper = scroll ? ScrollView : View;
+
   return (
-    <>
+    <View>
       <ActionModal isModalVisible={open} setIsModalVisible={setOpen}>
-        <View style={styles.modal}>
+        <Wrapper style={styles.modal}>
           {options.map((item, i) => (
             <TouchableOpacity
               key={i}
@@ -47,7 +53,7 @@ export const Select = ({
               </Text>
             </TouchableOpacity>
           ))}
-        </View>
+        </Wrapper>
       </ActionModal>
       {label && (
         <Text size={15} subtitle style={styles.label}>
@@ -62,7 +68,7 @@ export const Select = ({
         </View>
         <View style={styles.rightIcon}></View>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
 
@@ -73,6 +79,7 @@ const styles = StyleSheet.create({
     // borderRadius: css.border.radius.sm,
   },
   modal: {
+    maxHeight: (ScreenHeight * 2) / 3,
     backgroundColor: 'white',
     // padding: css.padding.md,
     borderRadius: css.border.radius.sm,
@@ -87,10 +94,10 @@ const styles = StyleSheet.create({
     right: 15,
   },
   label: {
-    marginBottom: 7,
+    marginBottom: 5,
   },
   container: {
-    flex: 1,
+    // flex: 1,
     position: 'relative',
     flexDirection: 'column',
     justifyContent: 'center',

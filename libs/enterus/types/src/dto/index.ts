@@ -1,17 +1,8 @@
 export * from './auth';
 export * from './profile';
-export * from './service';
-export * from './booking';
-export * from './category';
-export * from './providerService';
-export * from './providerRequest';
 export * from './message'
-export * from './payment'
 export * from './app'
-export * from './provider'
 export * from './user'
-export * from './dashboard'
-export * from './blog'
 export * from './log'
 
 export type DTO<T, U extends {

@@ -1,4 +1,4 @@
-import { BookingStatus, GetAppStateDTO, IAuthRequest, UpdateFcmTokenDTO } from "@enterslash/enterus/types";
+import { GetAppStateDTO, IAuthRequest, UpdateFcmTokenDTO } from "@enterslash/enterus/types";
 import { failed, success } from "../utils/response";
 import FCM from "../models/FCM";
 import Message from "../models/Message";
@@ -52,14 +52,14 @@ export const getAppState = async (req: IAuthRequest, res, next) => {
                     as: "booking"
                 }
             },
-            {
-                $match: {
-                    $or: [
-                        { "booking.status": BookingStatus.ACCEPTED },
-                        { "booking.status": BookingStatus.COMPLETED }
-                    ]
-                }
-            },
+            // {
+            //     $match: {
+            //         $or: [
+            //             { "booking.status": BookingStatus.ACCEPTED },
+            //             { "booking.status": BookingStatus.COMPLETED }
+            //         ]
+            //     }
+            // },
             {
                 $count: "unseenMessages"
             }

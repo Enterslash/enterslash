@@ -1,5 +1,5 @@
 import { DTO } from ".";
-import { IBookingModel, IMessageModel, IUserModel, MessageType } from "../models";
+import { IMessageModel, IUserModel, MessageType } from "../models";
 
 export type CreateMessageDTO = DTO<IMessageModel, {
     room?: string,
@@ -57,11 +57,4 @@ export type GetConversationsDTO = DTO<IUserModel, {
     service: {
         title: string,
     }
-    // lastMessage: {
-    //     message: string,
-    //     type: MessageType,
-    //     createdAt: Date,
-    // },
-    // unReadMessages: number,
-    // active: boolean,
 }>

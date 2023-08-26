@@ -16,7 +16,7 @@ import {
   Refresh,
 } from '@enterslash/react-native-ui';
 import { css, fullName, theme } from '@enterslash/enterus/utils';
-import { Bell, Search } from '@enterslash/icons';
+import { Search } from '@enterslash/icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationStack } from '../../../navigation/root';
 import { useHttp } from '../../../hook/useHttp';
@@ -24,6 +24,7 @@ import { get_conversations } from '@enterslash/enterus/http-client';
 import { GetConversationsDTO } from '@enterslash/enterus/types';
 import { useMessageStore } from '../../../store/message';
 import Private from '../../../components/Private';
+import { Icons } from '@enterslash/react-native-icons';
 
 const Chat = () => {
   const navigation = useNavigation<NavigationStack>();
@@ -33,6 +34,7 @@ const Chat = () => {
   const { request } = useHttp<GetConversationsDTO[]>(() => {
     return get_conversations();
   });
+
   useEffect(() => {
     request().then((res) => {
       setConversations(res);
@@ -51,12 +53,15 @@ const Chat = () => {
     setSearch(v);
   };
 
+  const joinRoom = () => {
+    navigation.navigate('joinRoom');
+  }
+
   return (
     <Layout>
       <View>
         <View style={styles.topInfo}>
           <Input
-            style={{ flex: 1 }}
             value={search}
             onChangeText={handleSearch}
             small
@@ -100,16 +105,31 @@ const Chat = () => {
           )}
         />
       </View>
+      <TouchableOpacity
+        onPress={joinRoom}
+        style={styles.floatingBtn}
+      >
+        <Icons.Plus color={theme.white} />
+      </TouchableOpacity>
     </Layout>
   );
 };
 
 const styles = StyleSheet.create({
-  topInfo: {
-    height: 60,
-    paddingHorizontal: css.padding.md,
-    flexDirection: 'row',
+  floatingBtn: {
+    backgroundColor: theme.primary,
+    width: 50,
+    height: 50,
+    position: 'absolute',
+    borderRadius: 999,
+    bottom: 20,
+    right: 20,
+    justifyContent: 'center',
     alignItems: 'center',
+  },
+  topInfo: {
+    paddingHorizontal: css.padding.md,
+    paddingVertical: css.padding.sm,
   },
 });
 

@@ -2,5 +2,8 @@
     "editor.tokenColorCustomizations": {
         "comments": "",
         "textMateRules": []
-    }
+    },
+    "cSpell.words": [
+        "enterslash"
+    ]
 }
