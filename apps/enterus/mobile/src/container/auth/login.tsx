@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { View, Image, ScrollView } from 'react-native';
+import React, { useState } from 'react';
+import { View, ScrollView } from 'react-native';
 import {
   AppBar,
   Button,
-  Checkbox,
-  Divider,
   Input,
   Layout,
   Space,
@@ -12,7 +10,6 @@ import {
   Text,
 } from '@enterslash/react-native-ui';
 import { css, theme } from '@enterslash/enterus/utils';
-import google from 'assets/google.png';
 import { Email, Lock } from '@enterslash/icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationStack } from '../../navigation/root';

@@ -38,7 +38,7 @@ const Splash = () => {
 
   const notAuthenticated = () => {
     setAuthenticated(false);
-    replace('main');
+    replace('login');
   };
 
   const authenticated = async () => {

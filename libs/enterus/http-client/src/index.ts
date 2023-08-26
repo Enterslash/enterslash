@@ -1,7 +1,5 @@
 export * from './auth';
 export * from './profile';
-export * from './admin';
-export * from './provider';
 export * from './message';
 export * from './app';
 export * from './notification'

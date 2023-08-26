@@ -1,51 +1,34 @@
-import React, { useEffect } from 'react';
-import { View, StyleSheet, ScrollView, Linking } from 'react-native';
+import React from 'react';
+import { View, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
 import {
-  Button,
-  Divider,
   Layout,
   Space,
   Text,
   AppBar,
   Avatar,
   ListItem,
-  Status,
-  StatusType,
 } from '@enterslash/react-native-ui';
 import { css, fullName } from '@enterslash/enterus/utils';
-import { LocationMarker, User, Calendar } from '@enterslash/icons';
+import { LocationMarker, User } from '@enterslash/icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationStack } from '../../../navigation/root';
 import { useAction } from '../../../hook/useAction';
 import { useUserStore } from '../../../store/userStore';
-import usePayment from '../../../hook/usePayment';
-import Private from '../../../components/Private';
-import { checkAccess } from '../../../utils/checkAccess';
-import { UserType } from '@enterslash/enterus/types';
-import { useTourStore } from '../../../store/tourStore';
-import { showAlert } from '@enterslash/react-native-utils';
+import { Icons } from '@enterslash/react-native-icons';
 
 const Settings = () => {
-  const { openCardSheet } = usePayment();
   const { user } = useUserStore();
-  const { startTour } = useTourStore();
   const navigation = useNavigation<NavigationStack>();
-  const { logout, loader } = useAction();
-  const isProvider = checkAccess(UserType.PROVIDER);
-
-  const startTutorial = () => {
-    startTour();
-    showAlert('Tutorial has been restarted!', 'success');
-  };
+  const { logout } = useAction();
 
   return (
     <Layout>
       <AppBar
         title="Settings"
         renderRight={
-          !isProvider ? null : (
-            <Status type={StatusType.PENDING} size={2} title="Provider" />
-          )
+          <TouchableOpacity onPress={logout}>
+            <Icons.LogOut />
+          </TouchableOpacity>
         }
       />
       <ScrollView style={{ flex: 1 }}>
@@ -72,58 +55,14 @@ const Settings = () => {
                 title="User Information"
                 onPress={() => navigation.navigate('editProfile')}
               />
-              <ListItem
-                onPress={openCardSheet}
-                icon={<User height="20px" width="20px" />}
-                title="Payment Details"
-              />
-              <ListItem
-                onPress={() => navigation.navigate('schedule')}
-                icon={<User height="20px" width="20px" />}
-                title="Schedule"
-              />
-              <ListItem
-                onPress={() => navigation.navigate('beProvider')}
-                icon={<User height="20px" width="20px" />}
-                title={isProvider ? 'Identity' : 'Become a Provider'}
-              />
-              {isProvider && (
-                <ListItem
-                  onPress={() => navigation.navigate('myServices')}
-                  icon={<User height="20px" width="20px" />}
-                  title="Manage Services"
-                />
-              )}
-              <ListItem
-                onPress={startTutorial}
-                icon={<User height="20px" width="20px" />}
-                title="Restart Tutorial"
-              />
+
               <ListItem
                 onPress={() => navigation.navigate('deleteAccount')}
                 icon={<User height="20px" width="20px" />}
                 title="Delete Account"
               />
-              <Divider vr length={300} space={10} />
-              <ListItem
-                onPress={() => {
-                  Linking.openURL('https://enterslash.com/contact');
-                }}
-                icon={<User height="20px" width="20px" />}
-                title="Help and Support"
-              />
-              <ListItem
-                onPress={() => {
-                  Linking.openURL('https://enterus.co/privacy_policy');
-                }}
-                icon={<User height="20px" width="20px" />}
-                title="Privacy Policy"
-              />
             </View>
           </View>
-          <Space height={50} />
-          <Button loader={loader} onPress={logout}>Logout</Button>
-          <Space height={20} />
         </View>
       </ScrollView>
     </Layout>
@@ -138,12 +77,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const PrivateSettings = () => {
-  return (
-    <Private>
-      <Settings />
-    </Private>
-  );
-};
+// const PrivateSettings = () => {
+//   return (
+//     <Private>
+//       <Settings />
+//     </Private>
+//   );
+// };
 
-export default PrivateSettings;
+export default Settings;

@@ -110,7 +110,7 @@ const EditProfile = () => {
     edit_profile_request().then((res) => {
       showMessage('Profile updated successfully', 'success');
       setUser(res);
-      navigation.navigate('main');
+      navigation.replace('main');
     });
   };
 

@@ -133,12 +133,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const PrivateChat = () => {
-  return (
-    <Private>
-      <Chat />
-    </Private>
-  );
-};
+// const PrivateChat = () => {
+//   return (
+//     <Private>
+//       <Chat />
+//     </Private>
+//   );
+// };
 
-export default PrivateChat;
+export default Chat;

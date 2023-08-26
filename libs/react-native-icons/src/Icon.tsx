@@ -17,4 +17,7 @@ export const Icons = {
   Plus: (arg: IIcon) => (
     <Icon name="plus" size={arg.size || size} color={arg.color} />
   ),
+  LogOut: (arg: IIcon) => (
+    <Icon name="logout" size={arg.size || size} color={arg.color} />
+  ),
 };

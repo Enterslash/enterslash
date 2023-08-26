@@ -9,10 +9,10 @@ import {
 } from '@enterslash/icons';
 import { theme } from '@enterslash/enterus/utils';
 import { StyleSheet, View } from 'react-native';
-import Home from '../container/main/home';
+// import Home from '../container/main/home';
 import Chat from '../container/main/chat';
 import Settings from '../container/main/settings';
-import Orders from '../container/main/orders';
+// import Orders from '../container/main/orders';
 import { useMessageStore } from '../store/message';
 import {
   NavigatorScreenParams,
@@ -69,8 +69,6 @@ function MainStack() {
     }, [])
   );
 
-  return <Chat />;
-
   return (
     <Tab.Navigator
       initialRouteName="home"
@@ -95,7 +93,7 @@ function MainStack() {
         },
       })}
     >
-      <Tab.Screen name="home" component={Home} />
+      {/* <Tab.Screen name="home" component={Home} /> */}
       <Tab.Screen
         name="chat"
         options={
@@ -105,7 +103,7 @@ function MainStack() {
         }
         component={Chat}
       />
-      <Tab.Screen name="orders" component={Orders} />
+      {/* <Tab.Screen name="orders" component={Orders} /> */}
       <Tab.Screen name="settings" component={Settings} />
     </Tab.Navigator>
   );

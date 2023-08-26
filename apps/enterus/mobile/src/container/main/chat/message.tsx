@@ -25,13 +25,12 @@ import { Gallery, OptionCircle, Send } from '@enterslash/icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import {
   GetMessageDTO,
-  GetSingleBookingsDTO,
   MessageType,
 } from '@enterslash/enterus/types';
 import { NavigationStack, RouteStack } from '../../../navigation/root';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useHttp } from '../../../hook/useHttp';
-import { get_messages, get_single_booking } from '@enterslash/enterus/http-client';
+import { get_messages } from '@enterslash/enterus/http-client';
 import { useUserStore } from '../../../store/userStore';
 import { isProvider } from '../../../utils';
 import {
@@ -39,7 +38,7 @@ import {
   image_picker,
   toBase64,
 } from '@enterslash/react-native-utils';
-import { useTourStore } from '../../../store/tourStore';
+// import { useTourStore } from '../../../store/tourStore';
 import {
   join_room,
   leave_room,
@@ -59,40 +58,40 @@ const ChatPage = () => {
   const scrollViewRef = useRef<FlatList>();
   const navigation = useNavigation<NavigationStack>();
   const [messages, setMessages] = useState<GetMessageDTO[]>([]);
-  const [bookingData, setBookingData] = useState<GetSingleBookingsDTO>();
+  // const [bookingData, setBookingData] = useState<GetSingleBookingsDTO>();
   const [text, setText] = useState('');
   const route = useRoute<RouteStack<'message'>>();
   const insets = useSafeAreaInsets();
   const bookingId = route.params.bookingId;
   const [images, setImages] = useState([]);
   const { start: startGuide, eventEmitter, canStart } = useAppTourGuide();
-  const { newSignUp, state, finishTour, setTourStep } = useTourStore();
-  const users = [bookingData?.provider._id, bookingData?.user._id];
+  // const { newSignUp, state, finishTour, setTourStep } = useTourStore();
+  // const users = [bookingData?.provider._id, bookingData?.user._id];
   const receiver = users.filter((u) => u !== user?._id)[0];
 
-  useEffect(() => {
-    if (canStart) {
-      if (newSignUp && !state.messages.done) {
-        setTimeout(() => {
-          startGuide();
-        }, 500);
-      }
-    }
-  }, [canStart]);
+  // useEffect(() => {
+  //   if (canStart) {
+  //     if (newSignUp && !state.messages.done) {
+  //       setTimeout(() => {
+  //         startGuide();
+  //       }, 500);
+  //     }
+  //   }
+  // }, [canStart]);
 
-  const openOption = () => {
-    navigation.navigate('chatOptions', {
-      bookingId: bookingData._id,
-    });
-  };
+  // const openOption = () => {
+  //   navigation.navigate('chatOptions', {
+  //     bookingId: bookingData._id,
+  //   });
+  // };
 
   const { request: getMessages } = useHttp(() => {
     return get_messages(route.params.bookingId);
   });
 
-  const { request: getBooking } = useHttp(() => {
-    return get_single_booking(route.params.bookingId);
-  });
+  // const { request: getBooking } = useHttp(() => {
+  //   return get_single_booking(route.params.bookingId);
+  // });
 
   useEffect(() => {
     if (bookingId) {
@@ -103,9 +102,9 @@ const ChatPage = () => {
       getMessages().then((res) => {
         setMessages(res)
       });
-      getBooking().then((res) => {
-        setBookingData(res);
-      });
+      // getBooking().then((res) => {
+      //   setBookingData(res);
+      // });
     }
     return () => {
       leave_room(bookingId as string, user?._id);
@@ -159,20 +158,20 @@ const ChatPage = () => {
   };
 
   const hasAlert = () => {
-    if (!isProvider(user.userType)) {
-      if (
-        bookingData?.price?.acceptedByProvider &&
-        !bookingData?.price?.acceptedByUser
-      ) {
-        return true;
-      }
-    }
+    // if (!isProvider(user.userType)) {
+    //   if (
+    //     bookingData?.price?.acceptedByProvider &&
+    //     !bookingData?.price?.acceptedByUser
+    //   ) {
+    //     return true;
+    //   }
+    // }
   };
 
-  RegisterTourEventListener(eventEmitter, {
-    onChangeStep: () => (step) => setTourStep('messages', step?.order),
-    onFinish: () => finishTour('messages'),
-  });
+  // RegisterTourEventListener(eventEmitter, {
+  //   onChangeStep: () => (step) => setTourStep('messages', step?.order),
+  //   onFinish: () => finishTour('messages'),
+  // });
 
   return (
     <>
@@ -196,23 +195,23 @@ const ChatPage = () => {
                   }}
                 >
                   <Avatar
-                    source={
-                      provider
-                        ? bookingData?.user.avatar
-                        : bookingData?.provider.avatar
-                    }
+                    // source={
+                    //   provider
+                    //     ? bookingData?.user.avatar
+                    //     : bookingData?.provider.avatar
+                    // }
                     size={40}
                     rounded
                   />
                   <Space width={10} />
                   <View>
                     <Text>
-                      {fullName(
+                      {/* {fullName(
                         provider ? bookingData?.user : bookingData?.provider
-                      )}
+                      )} */}
                     </Text>
                     <Text size={12} subtitle>
-                      {bookingData?.service.title}
+                      {/* {bookingData?.service.title} */}
                     </Text>
                   </View>
                 </View>
@@ -221,11 +220,11 @@ const ChatPage = () => {
                   zone={1}
                   text="Click here to check the booking price"
                 >
-                  <Badge type={hasAlert() ? 'dot' : 'none'}>
-                    <TouchableOpacity onPress={openOption}>
+                  {/* <Badge type={hasAlert() ? 'dot' : 'none'}> */}
+                    <TouchableOpacity>
                       <OptionCircle height="25px" width="25px" />
                     </TouchableOpacity>
-                  </Badge>
+                  {/* </Badge> */}
                 </Step>
               </View>
             }

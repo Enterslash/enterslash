@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { View, Image, ScrollView, Linking } from 'react-native';
+import { View, ScrollView } from 'react-native';
 import {
   AppBar,
-  BottomAction,
   Button,
-  Checkbox,
-  Divider,
   Input,
   Layout,
   Space,
@@ -13,24 +10,16 @@ import {
   Text,
 } from '@enterslash/react-native-ui';
 import { css, theme } from '@enterslash/enterus/utils';
-import google from 'assets/google.png';
 import { Email, Lock, Username } from '@enterslash/icons';
-import { Link, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { NavigationStack } from '../../navigation/root';
 import { AuthSuccessDTO, RegisterDTO } from '@enterslash/enterus/types';
 import { registration } from '@enterslash/enterus/http-client';
-import {
-  StorageKeys,
-  setLocalItem,
-  showAlert,
-} from '@enterslash/react-native-utils';
+import { setLocalItem, showAlert } from '@enterslash/react-native-utils';
 import { useHttp } from '../../hook/useHttp';
-import { useTourStore } from '../../store/tourStore';
 
 const Registration = () => {
   const { navigate, replace } = useNavigation<NavigationStack>();
-  const [isChecked, setIsChecked] = useState(false);
-  const { startTour } = useTourStore();
   const [user, setUser] = useState<RegisterDTO>({
     email: '',
     password: '',
@@ -50,7 +39,6 @@ const Registration = () => {
       return;
     }
     request().then((res) => {
-      startTour();
       setLocalItem('TOKEN', res?.jwtToken);
       replace('splash');
     });
@@ -154,7 +142,7 @@ const Registration = () => {
         </Button>
         <Space height={20} /> */}
       </ScrollView>
-      <BottomAction>
+      {/* <BottomAction>
         <Text center size={13}>
           By registering, you agree with enterus
         </Text>
@@ -166,22 +154,22 @@ const Registration = () => {
             text="Privacy policy"
           />
         </Text>
-      </BottomAction>
+      </BottomAction> */}
     </Layout>
   );
 };
 
-const LinkTag = ({ text, link }: { text: string; link: string }) => (
-  <Text
-    onPress={() => {
-      Linking.openURL(link);
-    }}
-    center
-    primary
-    size={13}
-  >
-    {text}
-  </Text>
-);
+// const LinkTag = ({ text, link }: { text: string; link: string }) => (
+//   <Text
+//     onPress={() => {
+//       Linking.openURL(link);
+//     }}
+//     center
+//     primary
+//     size={13}
+//   >
+//     {text}
+//   </Text>
+// );
 
 export default Registration;
