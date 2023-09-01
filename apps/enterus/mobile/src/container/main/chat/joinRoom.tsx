@@ -1,18 +1,15 @@
 import {
-  ActionModal,
   AppBar,
   BottomAction,
   Button,
-  Card,
   Input,
   Layout,
   Select,
-  Space,
-  Text,
 } from '@enterslash/react-native-ui';
-import React, { useState } from 'react';
-import { KeyboardAvoidingView, ScrollView, View } from 'react-native';
-import { section, subject } from '../../../constant';
+import React, { useEffect, useState } from 'react';
+import { ScrollView, View } from 'react-native';
+import { useHttp } from '../../../hook/useHttp';
+import { get_room_identifiers } from '@enterslash/enterus/http-client';
 
 type Props = {
   onCreate: () => void;
@@ -33,13 +30,23 @@ export default function JoinRoom({
     code: '',
   });
 
+  const { data, request } = useHttp(() => {
+    return get_room_identifiers();
+  });
+
   const handleChange = (v, name: keyof typeof room) => {
     setRoom({ ...room, [name]: v });
   };
 
+  useEffect(() => {
+    request({
+      globalLoading: true,
+    });
+  }, []);
+
   return (
     <Layout>
-      <AppBar title={'Class Group'} />
+      <AppBar title={'Join Group'} />
       <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
         <View style={{ gap: 10 }}>
           <Input
@@ -51,14 +58,14 @@ export default function JoinRoom({
             value={room.batch}
           />
           <Select
-            options={subject}
+            options={data?.subject || []}
             onSelect={(v) => handleChange(v, 'subject')}
             value={room.subject}
             label={'Subjects'}
             scroll
           />
           <Select
-            options={section}
+            options={data?.section || []}
             onSelect={(v) => handleChange(v, 'section')}
             value={room.section}
             label={'Section'}
@@ -88,7 +95,7 @@ export default function JoinRoom({
         </View>
       </ScrollView>
       <BottomAction>
-        <Button>Add</Button>
+        <Button>Join</Button>
       </BottomAction>
     </Layout>
   );

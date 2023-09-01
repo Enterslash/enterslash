@@ -4,6 +4,7 @@ export * from './message'
 export * from './app'
 export * from './user'
 export * from './log'
+export * from './room'
 
 export type DTO<T, U extends {
     [x in keyof T]?: Partial<U[x]> extends Partial<T[x]> ? DTO<T[x], Partial<T[x]>> : any;

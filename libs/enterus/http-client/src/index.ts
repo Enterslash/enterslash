@@ -5,3 +5,4 @@ export * from './app';
 export * from './notification'
 export * from './user'
 export * from './log'
+export * from './room'
