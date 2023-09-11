@@ -11,7 +11,7 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		22E65C7C2A437D0E0012AFBB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22E65C7B2A437D0E0012AFBB /* GoogleService-Info.plist */; };
+		22D7952D2AAF38AD0015013C /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 22D7952C2AAF38AD0015013C /* GoogleService-Info.plist */; };
 		71C8AA0915ACA409836E7D9F /* Pods_Enterus.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4753F7FC7F0B46C811A0FDC1 /* Pods_Enterus.framework */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		E80734BB9F27EEC2B97DA536 /* Pods_Enterus_EnterusTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 121EA0456773EF310B87B24B /* Pods_Enterus_EnterusTests.framework */; };
@@ -41,7 +41,7 @@
 		22B012332A41704100E09E99 /* Enterus.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Enterus.entitlements; path = Enterus/Enterus.entitlements; sourceTree = "<group>"; };
 		22C208532A4235E70076E7F4 /* hermes.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = hermes.xcframework; path = "Pods/hermes-engine/destroot/Library/Frameworks/universal/hermes.xcframework"; sourceTree = "<group>"; };
 		22C208552A4235F50076E7F4 /* reacthermes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = reacthermes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		22E65C7B2A437D0E0012AFBB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		22D7952C2AAF38AD0015013C /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		2B38ADEB92C308C2E678E17C /* Pods-Enterus.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Enterus.debug.xcconfig"; path = "Target Support Files/Pods-Enterus/Pods-Enterus.debug.xcconfig"; sourceTree = "<group>"; };
 		3E82489E3D11C96FB5057FCB /* Pods-Enterus-EnterusTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Enterus-EnterusTests.release.xcconfig"; path = "Target Support Files/Pods-Enterus-EnterusTests/Pods-Enterus-EnterusTests.release.xcconfig"; sourceTree = "<group>"; };
 		3FE011404C69BA6506CC3257 /* Pods-Enterus-EnterusTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Enterus-EnterusTests.debug.xcconfig"; path = "Target Support Files/Pods-Enterus-EnterusTests/Pods-Enterus-EnterusTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -124,7 +124,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
-				22E65C7B2A437D0E0012AFBB /* GoogleService-Info.plist */,
+				22D7952C2AAF38AD0015013C /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* Enterus */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* EnterusTests */,
@@ -254,7 +254,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				22E65C7C2A437D0E0012AFBB /* GoogleService-Info.plist in Resources */,
+				22D7952D2AAF38AD0015013C /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,7 +513,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Enterus/Enterus.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 53K7J3KDNL;
+				DEVELOPMENT_TEAM = 8B76ZCWZ8Y;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = Enterus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Enterus;
@@ -543,7 +543,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Enterus/Enterus.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 53K7J3KDNL;
+				DEVELOPMENT_TEAM = 8B76ZCWZ8Y;
 				INFOPLIST_FILE = Enterus/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Enterus;
 				LD_RUNPATH_SEARCH_PATHS = (

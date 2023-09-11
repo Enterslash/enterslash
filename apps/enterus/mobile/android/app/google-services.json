@@ -1,44 +1,26 @@
 {
   "project_info": {
-    "project_number": "720256741793",
-    "project_id": "enterus-9e31d",
-    "storage_bucket": "enterus-9e31d.appspot.com"
+    "project_number": "91588351155",
+    "project_id": "enterus-c2208",
+    "storage_bucket": "enterus-c2208.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:720256741793:android:61779877736fa512591be0",
+        "mobilesdk_app_id": "1:91588351155:android:a4e5daab7678694aae0cc6",
         "android_client_info": {
           "package_name": "com.enterus"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "720256741793-erfiack0f0u0pub53638aatgbrrsl24l.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.enterus",
-            "certificate_hash": "25995d596a4459d543c5be0b9caed7acb6652b77"
-          }
-        },
-        {
-          "client_id": "720256741793-i7l0jo1th4csoromptoblsbvvgv2537e.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC1TVqZuegK4qw1WP7uQrKJPx78tTTXYJ0"
+          "current_key": "AIzaSyAnXr8pgoKr1O32KDMwa8RzHnlLA4sakDo"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "720256741793-i7l0jo1th4csoromptoblsbvvgv2537e.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
+          "other_platform_oauth_client": []
         }
       }
     }
