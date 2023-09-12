@@ -9,3 +9,13 @@ export const fullName = (user: Partial<Pick<IUser, 'firstName' | 'lastName' | 'e
         return ''
     }
 }
+
+export const roomIdToTitle = (roomId: string) => {
+    if (!roomId) return '';
+    const [batch, subject, section, course, code] = roomId.split('-');
+    return `${course.toUpperCase()}-${code}`;
+};
+
+export const randomBackground = (name: string) => {
+    return 'https://source.boringavatars.com/bauhaus/30/' + name
+}

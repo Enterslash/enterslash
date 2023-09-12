@@ -18,13 +18,7 @@ const roomSchema = new Schema<IRoom>(
         },
         cover: {
             type: String,
-        },
-        users: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: "User",
-            },
-        ],
+        }
     }
 );
 

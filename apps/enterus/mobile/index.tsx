@@ -33,7 +33,7 @@ const linking: LinkingOptions<RootStackParamList> = {
           settings: AppLinks.settings(),
         },
       },
-      chatOptions: AppLinks.chatOptions(),
+      // chatOptions: AppLinks.chatOptions(),
       message: AppLinks.message(),
     },
   },

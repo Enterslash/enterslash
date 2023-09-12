@@ -15,7 +15,6 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@enterslash/enterus/components": ["libs/enterus/components/src/index.ts"],
       "@enterslash/enterus/http-client": ["libs/enterus/http-client/src/index.ts"],
       "@enterslash/enterus/socket-client": [
         "libs/enterus/socket-client/src/index.ts"

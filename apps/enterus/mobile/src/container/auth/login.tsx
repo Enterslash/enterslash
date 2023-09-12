@@ -13,7 +13,7 @@ import { css, theme } from '@enterslash/enterus/utils';
 import { Email, Lock } from '@enterslash/icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationStack } from '../../navigation/root';
-import { AuthSuccessDTO, LoginDTO, Platforms } from '@enterslash/enterus/types';
+import { AuthSuccessDTO, LoginDTO } from '@enterslash/enterus/types';
 import { login } from '@enterslash/enterus/http-client';
 import { useHttp } from '../../hook/useHttp';
 import { setLocalItem, showAlert } from '@enterslash/react-native-utils';
@@ -23,7 +23,6 @@ const Login = () => {
   const [user, setUser] = useState<LoginDTO>({
     email: '',
     password: '',
-    platform: Platforms.CLIENT_APP,
   });
 
   const { error, request, loading } = useHttp<AuthSuccessDTO, LoginDTO>(() => {
@@ -51,9 +50,9 @@ const Login = () => {
 
   return (
     <Layout>
-      <AppBar />
+      {/* <AppBar /> */}
       <ScrollView style={{ paddingHorizontal: css.padding.md, flex: 1 }}>
-        {/* <Space height={40} /> */}
+        <Space height={40} />
         <View>
           <Text bold size={TEXT.SIZE.TITLE}>
             Welcome to{' '}

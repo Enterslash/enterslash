@@ -11,7 +11,6 @@ export interface IRoom {
     roomType: string,
     title: string,
     cover: string,
-    users: IUserModel[],
 }
 
 export interface IRoomModel extends IRoom, Document { }

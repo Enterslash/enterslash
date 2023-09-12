@@ -64,7 +64,7 @@ export const Input = ({
   };
 
   return (
-    <>
+    <View>
       {label && (
         <Text size={15} subtitle style={styles.label}>
           {label}
@@ -112,7 +112,7 @@ export const Input = ({
       {error ? (
         <Text style={{ marginTop: 5, color: 'red' }}>{error}</Text>
       ) : null}
-    </>
+    </View>
   );
 };
 

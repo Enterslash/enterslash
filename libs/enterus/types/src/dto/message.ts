@@ -3,9 +3,7 @@ import { IMessageModel, IUserModel, MessageType } from "../models";
 
 export type CreateMessageDTO = DTO<IMessageModel, {
     room?: string,
-    receiver?: string,
     sender?: string,
-    booking: string,
     message: string,
     attachments?: File[],
     type: MessageType,
@@ -16,20 +14,12 @@ export type GetLatestMessageDTO = {
 }
 
 export type GetMessageDTO = DTO<IMessageModel, {
-    receiver?: {
-        _id: string,
-        firstName: string,
-        lastName: string,
-        avatar: string,
-    },
     sender?: {
         _id: string,
-        firstName: string,
-        lastName: string,
-        avatar: string,
+        firstName?: string,
+        lastName?: string,
+        avatar?: string,
     },
-    isMe: boolean,
-    booking?: string,
     message: string,
     attachments?: string[],
     type?: MessageType,

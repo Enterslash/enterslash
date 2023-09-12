@@ -22,7 +22,7 @@ export type RootStackParamList = {
   notification: undefined;
   //chat
   message: {
-    bookingId: string;
+    roomId: string;
   };
   joinRoom: undefined;
   // auth

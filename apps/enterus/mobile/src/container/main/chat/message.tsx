@@ -16,100 +16,73 @@ import {
   Space,
   Divider,
   MessageBubble,
-  Badge,
-  useAppTourGuide,
   AppTourGuide,
 } from '@enterslash/react-native-ui';
-import { css, fullName, theme } from '@enterslash/enterus/utils';
+import {
+  css,
+  randomBackground,
+  roomIdToTitle,
+  theme,
+} from '@enterslash/enterus/utils';
 import { Gallery, OptionCircle, Send } from '@enterslash/icons';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import {
-  GetMessageDTO,
-  MessageType,
-} from '@enterslash/enterus/types';
+import { GetMessageDTO, MessageType } from '@enterslash/enterus/types';
 import { NavigationStack, RouteStack } from '../../../navigation/root';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { useHttp } from '../../../hook/useHttp';
-import { get_messages } from '@enterslash/enterus/http-client';
+import { get_messages, get_room_info } from '@enterslash/enterus/http-client';
 import { useUserStore } from '../../../store/userStore';
-import { isProvider } from '../../../utils';
 import {
   ScreenWidth,
   image_picker,
   toBase64,
 } from '@enterslash/react-native-utils';
-// import { useTourStore } from '../../../store/tourStore';
 import {
   join_room,
   leave_room,
   listen_message,
   send_message,
 } from '@enterslash/enterus/socket-client';
-
-const { Provider, Step, RegisterTourEventListener } = AppTourGuide;
+import { SvgUri } from 'react-native-svg';
 
 const inputBoxSize =
   (ScreenWidth - 3 * css.padding.md - 4 * css.padding.sm) / 4 - 1;
 
-const ChatPage = () => {
+const Chat = () => {
   const { user } = useUserStore();
-  const provider = isProvider(user.userType);
   const [viewImage, setViewImage] = useState([]);
   const scrollViewRef = useRef<FlatList>();
   const navigation = useNavigation<NavigationStack>();
   const [messages, setMessages] = useState<GetMessageDTO[]>([]);
-  // const [bookingData, setBookingData] = useState<GetSingleBookingsDTO>();
   const [text, setText] = useState('');
   const route = useRoute<RouteStack<'message'>>();
   const insets = useSafeAreaInsets();
-  const bookingId = route.params.bookingId;
+  const roomId = route.params.roomId;
   const [images, setImages] = useState([]);
-  const { start: startGuide, eventEmitter, canStart } = useAppTourGuide();
-  // const { newSignUp, state, finishTour, setTourStep } = useTourStore();
-  // const users = [bookingData?.provider._id, bookingData?.user._id];
-  const receiver = users.filter((u) => u !== user?._id)[0];
-
-  // useEffect(() => {
-  //   if (canStart) {
-  //     if (newSignUp && !state.messages.done) {
-  //       setTimeout(() => {
-  //         startGuide();
-  //       }, 500);
-  //     }
-  //   }
-  // }, [canStart]);
-
-  // const openOption = () => {
-  //   navigation.navigate('chatOptions', {
-  //     bookingId: bookingData._id,
-  //   });
-  // };
 
   const { request: getMessages } = useHttp(() => {
-    return get_messages(route.params.bookingId);
+    return get_messages(route.params.roomId);
   });
 
-  // const { request: getBooking } = useHttp(() => {
-  //   return get_single_booking(route.params.bookingId);
-  // });
+  const { data: roomInfo, request: getRoomInfo } = useHttp(() => {
+    return get_room_info(route.params.roomId);
+  });
 
   useEffect(() => {
-    if (bookingId) {
-      join_room(bookingId as string, user?._id);
+    if (roomId) {
+      join_room(roomId, user?._id);
       listen_message((message: any) => {
         setMessages((prev) => [...prev, message]);
       });
+      getRoomInfo();
       getMessages().then((res) => {
-        setMessages(res)
+        setMessages(res);
       });
-      // getBooking().then((res) => {
-      //   setBookingData(res);
-      // });
     }
     return () => {
-      leave_room(bookingId as string, user?._id);
+      leave_room(roomId, user?._id);
     };
-  }, [bookingId]);
+  }, [roomId]);
 
   const createMessage = () => {
     if (text || images.length) {
@@ -118,18 +91,18 @@ const ChatPage = () => {
       setMessages([
         ...messages,
         {
-          isMe: true,
+          sender: {
+            _id: user._id,
+          },
           message: text,
           attachments: images,
         },
       ]);
       send_message({
-        room: bookingId,
-        booking: bookingId,
+        room: roomId,
         message: text,
-        receiver,
         sender: user._id,
-        type: images.length ? MessageType.IMAGE : MessageType.TEXT,
+        type: MessageType.TEXT,
         attachments: images,
       });
     }
@@ -137,7 +110,9 @@ const ChatPage = () => {
 
   const sendImage = async () => {
     try {
-      const image = await image_picker.camera();
+      const image = await image_picker.gallery({
+        cropping: false,
+      });
       const baseImg = await toBase64(image.path);
       setImages((prev) => [...prev, baseImg]);
     } catch (error) {
@@ -156,22 +131,6 @@ const ChatPage = () => {
   const closeViewImageHandler = () => {
     setViewImage([]);
   };
-
-  const hasAlert = () => {
-    // if (!isProvider(user.userType)) {
-    //   if (
-    //     bookingData?.price?.acceptedByProvider &&
-    //     !bookingData?.price?.acceptedByUser
-    //   ) {
-    //     return true;
-    //   }
-    // }
-  };
-
-  // RegisterTourEventListener(eventEmitter, {
-  //   onChangeStep: () => (step) => setTourStep('messages', step?.order),
-  //   onFinish: () => finishTour('messages'),
-  // });
 
   return (
     <>
@@ -194,38 +153,27 @@ const ChatPage = () => {
                     alignItems: 'center',
                   }}
                 >
-                  <Avatar
-                    // source={
-                    //   provider
-                    //     ? bookingData?.user.avatar
-                    //     : bookingData?.provider.avatar
-                    // }
+                  <SvgUri
+                    width={40}
+                    height={40}
+                    uri={randomBackground(roomInfo?.roomId)}
+                  />
+                  {/* <Avatar
+                    source={randomBackground(roomInfo?.roomId)}
                     size={40}
                     rounded
-                  />
+                  /> */}
                   <Space width={10} />
                   <View>
-                    <Text>
-                      {/* {fullName(
-                        provider ? bookingData?.user : bookingData?.provider
-                      )} */}
-                    </Text>
-                    <Text size={12} subtitle>
-                      {/* {bookingData?.service.title} */}
-                    </Text>
+                    <Text>{roomIdToTitle(roomInfo?.roomId)}</Text>
+                    {/* <Text size={12} subtitle>
+                      {bookingData?.service.title}
+                    </Text> */}
                   </View>
                 </View>
-                <Step
-                  shape="circle"
-                  zone={1}
-                  text="Click here to check the booking price"
-                >
-                  {/* <Badge type={hasAlert() ? 'dot' : 'none'}> */}
-                    <TouchableOpacity>
-                      <OptionCircle height="25px" width="25px" />
-                    </TouchableOpacity>
-                  {/* </Badge> */}
-                </Step>
+                {/* <TouchableOpacity>
+                  <OptionCircle height="25px" width="25px" />
+                </TouchableOpacity> */}
               </View>
             }
           />
@@ -249,7 +197,8 @@ const ChatPage = () => {
               <MessageBubble
                 onImagePress={viewImageHandler}
                 isNotification={item.type === MessageType.NOTIFICATION}
-                isMe={item.isMe}
+                isMe={item.sender._id === user._id}
+                sender={item.sender}
                 message={item.message}
                 attachments={item.attachments}
               />
@@ -277,14 +226,15 @@ const ChatPage = () => {
               <TouchableOpacity onPress={sendImage}>
                 <Gallery height="30px" width="30px" />
               </TouchableOpacity>
-              <Input
-                small
-                style={{ flex: 1 }}
-                rounded
-                placeholder="Write a message..."
-                value={text}
-                onChangeText={setText}
-              />
+              <View style={{ flex: 1 }}>
+                <Input
+                  small
+                  rounded
+                  placeholder="Write a message..."
+                  value={text}
+                  onChangeText={setText}
+                />
+              </View>
               <TouchableOpacity onPress={createMessage}>
                 <Send height="28px" width="28px" />
               </TouchableOpacity>
@@ -293,36 +243,6 @@ const ChatPage = () => {
           <Space height={insets.bottom} />
         </View>
       </Layout>
-      {/* <BottomSheet height={700} modalRef={bottomSheetRef}>
-        <View style={styles.contentContainer}>
-            <View style={{flex: 1, height: 200}}>
-                <ProductCard
-                    image={'https://picsum.photos/200/300'}
-                    // imageContent={}
-                    list
-                >
-                    <Text>Product 1</Text>
-                </ProductCard>
-            </View>
-          <Card style={{ width: '100%' }}>
-            <Text style={{ padding: css.padding.md }}>Offered price</Text>
-            <Divider vr />
-            <View style={{ padding: css.padding.md }}>
-              <Input small value="sdsdssd" />
-              <Space height={css.padding.md} />
-              <View style={{ flexDirection: 'row' }}>
-                <Button style={{ flex: 1 }} small>
-                  Accept
-                </Button>
-                <Space width={5} />
-                <Button color={theme.danger} small>
-                  Reject
-                </Button>
-              </View>
-            </View>
-          </Card>
-        </View>
-      </BottomSheet> */}
     </>
   );
 };
@@ -340,7 +260,6 @@ const styles = StyleSheet.create({
     borderRadius: css.border.radius.sm,
   },
   contentContainer: {
-    // flex: 1,
     paddingHorizontal: css.padding.md,
     width: '100%',
   },
@@ -360,13 +279,5 @@ const styles = StyleSheet.create({
     paddingLeft: 55,
   },
 });
-
-const Chat = () => {
-  return (
-    <Provider>
-      <ChatPage />
-    </Provider>
-  );
-};
 
 export default Chat;

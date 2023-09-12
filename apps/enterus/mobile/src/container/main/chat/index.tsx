@@ -5,6 +5,7 @@ import {
   View,
   FlatList,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {
   Layout,
@@ -15,38 +16,43 @@ import {
   Divider,
   Refresh,
 } from '@enterslash/react-native-ui';
-import { css, fullName, theme } from '@enterslash/enterus/utils';
+import {
+  css,
+  randomBackground,
+  roomIdToTitle,
+  theme,
+} from '@enterslash/enterus/utils';
 import { Search } from '@enterslash/icons';
 import { useNavigation } from '@react-navigation/native';
 import { NavigationStack } from '../../../navigation/root';
 import { useHttp } from '../../../hook/useHttp';
-import { get_conversations } from '@enterslash/enterus/http-client';
-import { GetConversationsDTO } from '@enterslash/enterus/types';
+import { GetRoomsDTO } from '@enterslash/enterus/types';
 import { useMessageStore } from '../../../store/message';
-import Private from '../../../components/Private';
 import { Icons } from '@enterslash/react-native-icons';
+import { get_conversations } from '@enterslash/enterus/http-client';
+import { SvgUri } from 'react-native-svg';
 
 const Chat = () => {
   const navigation = useNavigation<NavigationStack>();
   const [search, setSearch] = useState('');
   const { conversations, setConversations } = useMessageStore();
 
-  const { request } = useHttp<GetConversationsDTO[]>(() => {
+  const { request } = useHttp<GetRoomsDTO[]>(() => {
     return get_conversations();
   });
 
-  useEffect(() => {
+  const refresh = () => {
     request().then((res) => {
       setConversations(res);
     });
+  };
+
+  useEffect(() => {
+    refresh();
   }, []);
 
   const getSearchedMessages = conversations?.filter((conversation) => {
-    return (
-      conversation.service.title.toLowerCase().includes(search.toLowerCase()) ||
-      fullName(conversation).toLowerCase().includes(search.toLowerCase()) ||
-      conversation.email.toLowerCase().includes(search.toLowerCase())
-    );
+    return conversation.roomId.toLowerCase().includes(search.toLowerCase());
   });
 
   const handleSearch = (v) => {
@@ -55,7 +61,7 @@ const Chat = () => {
 
   const joinRoom = () => {
     navigation.navigate('joinRoom');
-  }
+  };
 
   return (
     <Layout>
@@ -72,16 +78,16 @@ const Chat = () => {
         </View>
         <Divider vr />
         <FlatList
-          refreshControl={<Refresh onRefresh={request} />}
+          refreshControl={<Refresh onRefresh={refresh} />}
           data={getSearchedMessages}
           ItemSeparatorComponent={() => <Divider vr />}
           ListFooterComponent={<Space height={100} />}
-          keyExtractor={({ bookingId }) => bookingId}
+          keyExtractor={({ _id }) => _id}
           renderItem={({ item, index }) => (
             <TouchableOpacity
               onPress={() => {
                 navigation.navigate('message', {
-                  bookingId: item.bookingId,
+                  roomId: item._id,
                 });
               }}
               style={{
@@ -89,26 +95,24 @@ const Chat = () => {
                 alignItems: 'center',
                 paddingHorizontal: css.padding.md,
                 paddingVertical: css.padding.md,
-                backgroundColor:
-                  item.unseenMessages > 0 ? theme.secondary : theme.white,
+                // backgroundColor:
+                //   item.unseenMessages > 0 ? theme.secondary : theme.white,
               }}
             >
-              <Avatar source={item.avatar} size={50} rounded />
+              <SvgUri
+                width={40}
+                height={40}
+                uri={randomBackground(item.roomId)}
+              />
               <Space width={10} />
               <View>
-                <Text bold={item.unseenMessages > 0}>{fullName(item)}</Text>
-                <Text bold={item.unseenMessages > 0} size={12} subtitle>
-                  {item.service.title}
-                </Text>
+                <Text>{roomIdToTitle(item.roomId)}</Text>
               </View>
             </TouchableOpacity>
           )}
         />
       </View>
-      <TouchableOpacity
-        onPress={joinRoom}
-        style={styles.floatingBtn}
-      >
+      <TouchableOpacity onPress={joinRoom} style={styles.floatingBtn}>
         <Icons.Plus color={theme.white} />
       </TouchableOpacity>
     </Layout>

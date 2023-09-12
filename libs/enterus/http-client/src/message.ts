@@ -18,7 +18,3 @@ export const get_messages = (bookingId: string) : Promise<GetMessageDTO[]> => {
 export const get_latest_messages = (bookingId: string, data: GetLatestMessageDTO) : Promise<GetMessageDTO[]> => {
     return  $api.post(`/message/${bookingId}/latest`, data);
 }
-
-export const get_conversations = () : Promise<GetConversationsDTO[]> => {
-    return  $api.get('/conversations');
-}

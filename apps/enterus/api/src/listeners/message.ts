@@ -8,6 +8,7 @@ import { ioRef } from "../config/socket";
 import { emitUnseenNotification } from "./notification";
 import { createNotification } from "../utils/create-notification";
 import { logger } from "../middleware/logger/logger";
+import Participant from "../models/Participant";
 
 interface IRoom {
     roomId: string,
@@ -61,6 +62,20 @@ const isOnline = (roomId, userId) => {
     return false;
 }
 
+const offlineUsers = async (roomId: string) => {
+    const participants = await Participant.find({
+        room: roomId,
+    });
+    const room = rooms.find(room => room.roomId === roomId);
+    if (room) {
+        return participants.filter(p => {
+            return !room.users.some(u => {
+                return u.id === p.user.toString()
+            })
+        }).map(p => p.user.toString())
+    }
+}
+
 export const messageListener = (io, socket) => {
     const joinRoom = (payload) => {
         const { room, user } = payload;
@@ -69,7 +84,7 @@ export const messageListener = (io, socket) => {
     }
 
     const send = async (payload: CreateMessageDTO) => {
-        const { room, attachments, booking, message, sender, receiver, type } = payload;
+        const { room, attachments, message, sender, type } = payload;
         try {
             const imageUrls = [];
 
@@ -95,24 +110,25 @@ export const messageListener = (io, socket) => {
             }
 
             const newMessage = await Message.create({
-                booking,
+                room,
                 message,
-                receiver,
                 sender,
                 type,
                 attachments: imageUrls,
             });
 
-            if (!isOnline(room, receiver)) {
-                emitUnseenMessage(receiver, {
-                    booking,
-                    count: 1
-                })
+            const offlineUserList = await offlineUsers(room);
+
+            if (offlineUserList.length) {
+                // emitUnseenMessage(receiver, {
+                //     booking,
+                //     count: 1
+                // })
                 pushNotification({
                     title: "New Message",
                     body: message,
-                    link: AppLinks.message(booking),
-                    userId: receiver,
+                    link: AppLinks.message(room),
+                    users: offlineUserList,
                 })
             }
 

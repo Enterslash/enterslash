@@ -157,7 +157,7 @@ const EditProfile = () => {
           value={tempUser.phone}
           error={edit_profile_error?.phone}
           label="Phone"
-          placeholder="1234567891"
+          placeholder="+880******"
           onChangeText={(v) => handleChange('phone', v)}
         />
         <Space height={15} />
@@ -174,16 +174,6 @@ const EditProfile = () => {
         <Button onPress={editProfile} loader={edit_profile_loader}>
           {signUp ? 'Complete' : 'Save'}
         </Button>
-        {signUp && (
-          <>
-            <Space height={20} />
-            <TouchableOpacity onPress={skip}>
-              <Text center bold primary>
-                Skip
-              </Text>
-            </TouchableOpacity>
-          </>
-        )}
       </BottomAction>
     </Layout>
   );

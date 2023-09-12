@@ -6,3 +6,4 @@ export * from './Notification';
 export * from './Logger';
 export * from './Room';
 export * from './Subject';
+export * from './Participants';

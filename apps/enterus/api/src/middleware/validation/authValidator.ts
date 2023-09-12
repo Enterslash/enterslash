@@ -2,7 +2,6 @@ import express from 'express';
 import * as Yup from 'yup';
 import { parseYupError } from '../../utils/helper';
 import { failed } from '../../utils/response';
-import { Platforms } from '@enterslash/enterus/types';
 
 const app = express();
 app.use(express.json());
@@ -14,7 +13,6 @@ const loginSchema = Yup.object().shape({
     password: Yup.string()
         .min(6, 'Password must be at least 6 characters')
         .required('Password is required'),
-    platform: Yup.string().oneOf(Object.values(Platforms)).required('Platform is required'),
 });
 
 export const loginValidator = async (req, res, next) => {

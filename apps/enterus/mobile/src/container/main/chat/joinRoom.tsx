@@ -5,23 +5,20 @@ import {
   Input,
   Layout,
   Select,
+  useMessageModal,
 } from '@enterslash/react-native-ui';
 import React, { useEffect, useState } from 'react';
 import { ScrollView, View } from 'react-native';
 import { useHttp } from '../../../hook/useHttp';
-import { get_room_identifiers } from '@enterslash/enterus/http-client';
+import {
+  get_room_identifiers,
+  join_room,
+} from '@enterslash/enterus/http-client';
+import { IRoomModel, JoinRoomDTO } from '@enterslash/enterus/types';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationStack } from '../../../navigation/root';
 
-type Props = {
-  onCreate: () => void;
-  modalVisible: boolean;
-  setModalVisible: (state: boolean) => void;
-};
-
-export default function JoinRoom({
-  onCreate,
-  modalVisible,
-  setModalVisible,
-}: Props) {
+export default function JoinRoom() {
   const [room, setRoom] = useState({
     batch: '',
     subject: '',
@@ -30,8 +27,20 @@ export default function JoinRoom({
     code: '',
   });
 
+  const navigation = useNavigation<NavigationStack>();
+
+  const { showMessage } = useMessageModal();
+
   const { data, request } = useHttp(() => {
     return get_room_identifiers();
+  });
+
+  const {
+    loading,
+    request: joinRoom,
+    error,
+  } = useHttp<IRoomModel, JoinRoomDTO>(() => {
+    return join_room(room);
   });
 
   const handleChange = (v, name: keyof typeof room) => {
@@ -44,17 +53,27 @@ export default function JoinRoom({
     });
   }, []);
 
+  const submit = () => {
+    joinRoom().then((res) => {
+      showMessage('Joined Successfully', 'success');
+      navigation.replace('message', {
+        roomId: res._id,
+      });
+    });
+  };
+
   return (
     <Layout>
       <AppBar title={'Join Group'} />
       <ScrollView style={{ flex: 1, paddingHorizontal: 20 }}>
-        <View style={{ gap: 10 }}>
+        <View style={{ gap: 20 }}>
           <Input
             label="Batch"
             keyboardType="number-pad"
             maxLength={3}
             placeholder="221"
             onChangeText={(v) => handleChange(v, 'batch')}
+            error={error?.batch}
             value={room.batch}
           />
           <Select
@@ -95,7 +114,9 @@ export default function JoinRoom({
         </View>
       </ScrollView>
       <BottomAction>
-        <Button>Join</Button>
+        <Button onPress={submit} loader={loading}>
+          Join
+        </Button>
       </BottomAction>
     </Layout>
   );

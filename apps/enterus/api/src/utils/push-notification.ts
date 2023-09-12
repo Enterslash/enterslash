@@ -1,4 +1,3 @@
-import { IUserModel } from '@enterslash/enterus/types';
 import { firebase } from '../firebase/index'
 import FCM from '../models/FCM';
 import { MulticastMessage } from 'firebase-admin/lib/messaging/messaging-api';
@@ -8,17 +7,18 @@ import { logger } from '../middleware/logger/logger';
 interface PushNotificationDTO {
   title: string;
   body: string;
-  tokens?: string[];
-  userId?: string | IUserModel;
+  users?: string[];
   link?: string;
 }
 
-export const pushNotification = async ({ title, body, tokens, userId, link }: PushNotificationDTO) => {
+export const pushNotification = async ({ title, body, users, link }: PushNotificationDTO) => {
   try {
     const fcm = await FCM.aggregate([
       {
         $match: {
-          user: new Types.ObjectId(userId.toString())
+          user: {
+            $in: users.map((id) => new Types.ObjectId(id))
+          }
         }
       },
       {
@@ -44,11 +44,7 @@ export const pushNotification = async ({ title, body, tokens, userId, link }: Pu
     title = title || "Enterus";
     body = body || "You got a new notification";
 
-    if (userId && !fcm) {
-      return null
-    } else {
-      tokens = fcm.map((f) => f.token);
-    }
+    const tokens = fcm.map((f) => f.token);
 
     if (!tokens.length) {
       return null

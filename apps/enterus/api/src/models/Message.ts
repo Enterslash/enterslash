@@ -13,11 +13,6 @@ const messageSchema = new Schema<IMessage>(
             ref: "User",
             required: true,
         },
-        receiver: {
-            type: Schema.Types.ObjectId,
-            ref: "User",
-            required: true,
-        },
         message: {
             type: String,
         },
@@ -30,10 +25,6 @@ const messageSchema = new Schema<IMessage>(
             enum: MessageType,
             default: MessageType.TEXT,
         },
-        seen: {
-            type: Boolean,
-            default: false,
-        }
     },
     {
         timestamps: true,

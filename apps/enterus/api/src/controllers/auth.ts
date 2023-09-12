@@ -3,7 +3,7 @@ import { createToken } from "../utils/jwt";
 import bcrypt from "bcryptjs";
 import UserSession from "../models/UserSession";
 import User from "../models/User";
-import { IAuthRequest, IRequest, LoginDTO, Platforms, RegisterDTO, UserType } from "@enterslash/enterus/types";
+import { IAuthRequest, IRequest, LoginDTO, RegisterDTO, UserType } from "@enterslash/enterus/types";
 import { failed, success } from "../utils/response";
 import FCM from "../models/FCM";
 import { logger } from "../middleware/logger/logger";
@@ -55,23 +55,12 @@ export const registration = async (req: IRequest<RegisterDTO>, res, next) => {
 export const login = async (req: IRequest<LoginDTO>, res) => {
   try {
     // Get user input
-    const { email, password, platform } = req.body;
+    const { email, password } = req.body;
 
     // Check if user exists
     const existingUser = await User.findOne({ email }).select("+password");
     if (!existingUser) {
       return res.status(404).json(failed({ issue: "User not found" }));
-    }
-
-    if (platform === Platforms.ADMIN_WEB) {
-      const authorized = [
-        UserType.ADMIN,
-        UserType.SUPER_ADMIN,
-        UserType.PROVIDER,
-      ]
-      if (!existingUser.userType.some((type) => authorized.includes(type))) {
-        return res.status(401).json(failed({ issue: "Unauthorized" }));
-      }
     }
 
     // Check if password is correct
