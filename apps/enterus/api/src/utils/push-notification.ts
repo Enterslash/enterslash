@@ -58,6 +58,21 @@ export const pushNotification = async ({ title, body, users, link }: PushNotific
           link,
         }),
       },
+      apns: {
+        payload: {
+          aps: {
+            contentAvailable: true,
+          },
+        },
+        headers: {
+          'apns-push-type': 'background',
+          'apns-priority': '5',
+          'apns-topic': 'com.enterslash.enterus',
+        },
+      },
+      android: {
+        priority: 'high',
+      },
       tokens,
     };
 

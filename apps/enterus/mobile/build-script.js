@@ -37,7 +37,7 @@ const args = process.argv.slice(2);
 
 if (args.includes('--production')) {
   updateConfig({
-    base_url: 'https://api.enterus.co',
+    base_url: 'https://enterus.onrender.com',
     publishable_key: 'pk_live_E0EHnwODPxPan3QHPOnbD65H',
     merchant_identifier: 'merchant.com.enterslash.enterus',
   });
