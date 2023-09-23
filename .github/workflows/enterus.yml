@@ -58,7 +58,7 @@ jobs:
         with:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          passowrd: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_DEPLOY_KEY }}
           port: ${{ secrets.SSH_PORT }}
           source: "./temp/enterus-api.tar"
           target: "/root/temp"
