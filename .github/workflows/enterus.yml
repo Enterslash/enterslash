@@ -40,7 +40,7 @@ jobs:
       - name: build and export docker image
         run: |
           cd temp
-          docker build -t enterus-api .
+          docker build --tag enterus-api .
           docker save -o enterus-api.tar enterus-api
 
       - name: Create SSH ditectory
