@@ -60,8 +60,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
-          source: "./temp/enterus-api.tar"
-          target: "/root/temp"
+          source: "temp/enterus-api.tar"
+          target: "/root/"
 
       - name: Run the app on Exord Online Hosted Server
         uses: appleboy/ssh-action@master
