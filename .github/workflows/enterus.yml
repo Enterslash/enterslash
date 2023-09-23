@@ -88,4 +88,4 @@ jobs:
             # echo "HOMEZZ_PRODUCT_ID=${{secrets.HOMEZZ_PRODUCT_ID}}" >> .env
             # echo "SEND_GRID_KEY=${{secrets.SEND_GRID_KEY}}" >> .env
             docker load -i enterus-api.tar
-            docker run --env-file .env -d --name enterus-api -p 9090:9090 enterus-api
+            docker run --env-file .env -d --name enterus-api -p 9090:9090 enterus-api
