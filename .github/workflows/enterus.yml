@@ -53,15 +53,15 @@ jobs:
         run: echo "${{ secrets.SSH_KNOWN_HOST }}" > ~/.ssh/known_hosts
 
       - name: Transfer files to Exord Online Hosted Server
-        # run: scp -r -i ~/.ssh/deploy ./temp/enterus-api.tar ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}}:/root/temp -p 24
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_DEPLOY_KEY }}
-          port: ${{ secrets.SSH_PORT }}
-          source: "./temp/enterus-api.tar"
-          target: "/root/temp"
+        run: scp -r -i ~/.ssh/deploy ./temp/enterus-api.tar ${{secrets.SSH_USERNAME}}@${{secrets.SSH_HOST}}:/root/temp -p 24
+        # uses: appleboy/scp-action@master
+        # with:
+        #   host: ${{ secrets.SSH_HOST }}
+        #   username: ${{ secrets.SSH_USERNAME }}
+        #   key: ${{ secrets.SSH_DEPLOY_KEY }}
+        #   port: ${{ secrets.SSH_PORT }}
+        #   source: "./temp/enterus-api.tar"
+        #   target: "/root/temp"
 
       - name: Run the app on Exord Online Hosted Server
         uses: appleboy/ssh-action@master
