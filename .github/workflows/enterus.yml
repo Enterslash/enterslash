@@ -60,7 +60,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           port: ${{ secrets.SSH_PORT }}
-          source: "temp/enterus-api.tar"
+          source: "./temp/enterus-api.tar"
           target: "/root/temp"
 
       - name: Run the app on Exord Online Hosted Server
@@ -89,20 +89,3 @@ jobs:
             # echo "SEND_GRID_KEY=${{secrets.SEND_GRID_KEY}}" >> .env
             docker load -i enterus-api.tar
             docker run --env-file .env -d --name enterus-api -p 9090:9090 enterus-api
-
-# name: remote ssh command
-# on: [push]
-# jobs:
-
-#   build:
-#     name: Build
-#     runs-on: ubuntu-latest
-#     steps:
-#     - name: executing remote ssh commands using password
-#       uses: appleboy/ssh-action@v1.0.0
-#       with:
-#         host: ${{ secrets.SSH_HOST }}
-#         username: ${{ secrets.SSH_USERNAME }}
-#         password: ${{ secrets.SSH_PASSWORD }}
-#         port: ${{ secrets.SSH_PORT }}
-#         script: whoami
