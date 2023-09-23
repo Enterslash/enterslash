@@ -9,7 +9,7 @@ on:
       - 'apps/enterus/api/**'
       - 'libs/**'
 env:
-  NX_NON_NATIVE_HASHER: true
+  NX_NON_NATIVE_HASHER: false
 
 jobs:
   build_and_deploy:
