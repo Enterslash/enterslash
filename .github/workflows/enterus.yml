@@ -41,7 +41,7 @@ jobs:
         run: |
           cd temp
           docker build -t enterus-api .
-          docker save -o homezz-api.tar homezz-api
+          docker save -o enterus-api.tar enterus-api
 
       - name: Create SSH ditectory
         run: mkdir ~/.ssh && chmod 700 ~/.ssh
