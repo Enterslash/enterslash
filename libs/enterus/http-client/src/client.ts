@@ -38,6 +38,8 @@ $api.interceptors.response.use(
     return response.data;
   },
   async (error) => {
+    console.log('error', error);
+    
     if (!isNextJs && error.response) {
       console.log('');
       console.log(

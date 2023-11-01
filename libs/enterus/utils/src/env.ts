@@ -1,5 +1,3 @@
 
-    export const base_url = "https://enterus.onrender.com"
-    export const publishable_key = "pk_live_E0EHnwODPxPan3QHPOnbD65H"
-    export const merchant_identifier = "merchant.com.enterslash.enterus"
+    export const base_url = "http://103.49.170.241:9090"
   

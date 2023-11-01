@@ -7,7 +7,6 @@ import {
   MessageModalProvider,
 } from '@enterslash/react-native-ui';
 import { useAppStore } from './src/store/appStore';
-import { StripeProvider } from '@stripe/stripe-react-native';
 import {
   configureNotification,
   createNotificationChannel,
@@ -17,8 +16,6 @@ import {
 } from '@enterslash/react-native-utils';
 import {
   AppLinks,
-  merchant_identifier,
-  publishable_key,
 } from '@enterslash/enterus/utils';
 import CodePush from 'react-native-code-push';
 
@@ -49,10 +46,6 @@ const App = () => {
   const { loading } = useAppStore();
 
   return (
-    <StripeProvider
-      publishableKey={publishable_key}
-      merchantIdentifier={merchant_identifier}
-    >
       <NavigationContainer linking={linking}>
         {loading && <AppLoader />}
         <MessageModalProvider>
@@ -60,7 +53,6 @@ const App = () => {
         </MessageModalProvider>
         <AlertInitializer />
       </NavigationContainer>
-    </StripeProvider>
   );
 };
 
